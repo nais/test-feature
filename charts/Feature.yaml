@@ -1,0 +1,7 @@
+environmentKinds:
+  - tenant
+values:
+  message:
+    displayName: Message
+    config:
+      type: string

@@ -1,0 +1,7 @@
+apiVersion: v2
+name: feature
+description: Harmless Fasit smoke-test feature
+type: application
+version: 0.0.0
+sources:
+  - https://github.com/nais/feature/tree/main/charts
