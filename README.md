@@ -5,12 +5,5 @@ configurable `message` value — useful for verifying Fasit end-to-end.
 
 ## Release
 
-Every push to `main` lints, packages, and pushes the Helm chart, then
-deploys via Fasit (ci-nais first, then all tenants).
-
-## Local
-
-```sh
-helm lint charts
-helm template test-feature charts
-```
+Every push to `main` packages, and pushes the Helm chart, then
+deploys via Fasit (ci-nais first, then all tenant environments).
