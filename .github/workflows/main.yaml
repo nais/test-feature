@@ -1,38 +1,21 @@
-name: Build and deploy feature
+name: Release
 
 on:
-  pull_request:
   push:
     branches:
       - main
 
 env:
-  NAME: feature
+  NAME: test-feature
   FEATURE_REPOSITORY: oci://europe-north1-docker.pkg.dev/nais-io/nais/feature
 
 concurrency:
   group: ${{ github.ref }}
   cancel-in-progress: true
 
-permissions:
-  contents: read
-
 jobs:
-  check:
-    name: Check chart
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # ratchet:actions/checkout@v6
-      - uses: azure/setup-helm@dda3372f752e03dde6b3237bc9431cdc2f7a02a2 # ratchet:azure/setup-helm@v5
-        with:
-          version: v3.20.2
-      - run: helm lint charts
-      - run: helm template ${{ env.NAME }} charts
-
   release:
     name: Release chart
-    if: github.ref == 'refs/heads/main'
-    needs: check
     runs-on: ubuntu-latest
     outputs:
       version: ${{ steps.version.outputs.version }}
@@ -63,8 +46,7 @@ jobs:
       - run: helm push ${{ env.NAME }}-${{ steps.version.outputs.version }}.tgz ${{ env.FEATURE_REPOSITORY }}
 
   deploy:
-    name: Deploy with Fasit
-    if: github.ref == 'refs/heads/main'
+    name: Deploy
     needs: release
     runs-on: fasit-deploy
     permissions:
