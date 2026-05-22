@@ -5,3 +5,7 @@ values:
     displayName: Message
     config:
       type: string
+  temp-config:
+    displayName: Temp config?
+    config:
+      type: bool
